@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"gofiber-todo/config/database"
+	"gofiber-todo/src/config/database"
 	"gofiber-todo/src/entity"
 	auth_module "gofiber-todo/src/modules/auth"
 	todo_module "gofiber-todo/src/modules/todo"

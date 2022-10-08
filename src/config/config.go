@@ -8,8 +8,13 @@ import (
 var (
 	// PORT returns the server listening port
 	PORT = getEnv("PORT", "3000")
-	// DB returns the name of the sqlite database
-	DB = getEnv("DB", "gotodo.db")
+
+	//DB INFO
+	DB          = getEnv("DB", "postgres")
+	DB_PORT     = getEnv("DB_PORT", "5432")
+	DB_USER     = getEnv("DB_USER", "postgres")
+	DB_PASSWORD = getEnv("DB_PASSWORD", "changeme")
+
 	// TOKENKEY returns the jwt token secret
 	TOKENKEY = getEnv("TOKEN_KEY", "test_key")
 	// TOKENEXP returns the jwt token expiration duration.

@@ -1,7 +1,7 @@
 package todo
 
 import (
-	"gofiber-todo/config/database"
+	"gofiber-todo/src/config/database"
 	"gofiber-todo/src/middleware"
 
 	"github.com/gofiber/fiber/v2"

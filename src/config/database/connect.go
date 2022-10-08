@@ -1,10 +1,11 @@
 package database
 
 import (
+	"gofiber-todo/src/config"
 	"log"
 	"time"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -12,9 +13,16 @@ import (
 var DB *gorm.DB
 
 func ConnectDb() {
-	// dsn := "host=localhost user=postgres password='' dbname=go-db port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{
+	// db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{
+	// 	SkipDefaultTransaction: true,
+	// 	NowFunc:                func() time.Time { return time.Now().Local() },
+	// 	Logger:                 logger.Default.LogMode(logger.Info),
+	// })
+
+	db, err := gorm.Open(postgres.New(postgres.Config{
+		DSN: "host=localhost user=" + config.DB_USER + " password=" + config.DB_PASSWORD + " dbname=" + config.DB + " port=" + config.DB_PORT + " sslmode=disable TimeZone=Asia/Seoul",
+	}), &gorm.Config{
 		SkipDefaultTransaction: true,
 		NowFunc:                func() time.Time { return time.Now().Local() },
 		Logger:                 logger.Default.LogMode(logger.Info),

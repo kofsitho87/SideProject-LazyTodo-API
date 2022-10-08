@@ -5,7 +5,6 @@ import (
 	"gofiber-todo/utils/validator"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 type TodoController struct {
@@ -60,7 +59,7 @@ func (ctrl *TodoController) CreateTodo(c *fiber.Ctx) error {
 		})
 	}
 
-	createTodoDto.ID = uint(uuid.New().ID())
+	// createTodoDto.ID = uint(uuid.New().ID())
 	createTodoDto.Creator = c.Locals("USER").(uint)
 
 	todo := createTodoDto.ToEntity()

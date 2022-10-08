@@ -3,7 +3,7 @@ package jwt
 import (
 	"errors"
 	"fmt"
-	"gofiber-todo/config"
+	"gofiber-todo/src/config"
 	"time"
 
 	"github.com/golang-jwt/jwt"

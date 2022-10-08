@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"gofiber-todo/config/database"
+	"gofiber-todo/src/config/database"
 	"gofiber-todo/src/entity"
 
 	"github.com/gofiber/fiber/v2"
