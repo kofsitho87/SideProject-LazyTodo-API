@@ -15,7 +15,9 @@ type TodoController struct {
 func (ctrl *TodoController) GetTodos(c *fiber.Ctx) error {
 	todos := &[]dto.TodoDTO{}
 
-	if err := ctrl.service.getTodos(todos).Error; err != nil {
+	userId := c.Locals("USER").(uint)
+
+	if err := ctrl.service.getTodos(todos, userId).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 		})
@@ -50,7 +52,6 @@ func (ctrl *TodoController) GetTodo(c *fiber.Ctx) error {
 		"data": todo,
 	})
 }
-
 func (ctrl *TodoController) CreateTodo(c *fiber.Ctx) error {
 	createTodoDto := new(dto.CreateTodoDTO)
 	if err := validator.ParseBodyAndValidate(c, createTodoDto); err != nil {
@@ -60,6 +61,7 @@ func (ctrl *TodoController) CreateTodo(c *fiber.Ctx) error {
 	}
 
 	createTodoDto.ID = uint(uuid.New().ID())
+	createTodoDto.Creator = c.Locals("USER").(uint)
 
 	todo := createTodoDto.ToEntity()
 	if err := ctrl.service.createTodo(todo).Error; err != nil {

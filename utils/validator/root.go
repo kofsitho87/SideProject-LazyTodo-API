@@ -12,7 +12,11 @@ var validate = validator.New()
 
 func ParseBody(ctx *fiber.Ctx, body interface{}) *fiber.Error {
 	if err := ctx.BodyParser(body); err != nil {
-		return fiber.ErrBadRequest
+		return &fiber.Error{
+			Code:    fiber.ErrBadRequest.Code,
+			Message: err.Error(),
+		}
+		// return fiber.ErrBadRequest
 	}
 
 	return nil

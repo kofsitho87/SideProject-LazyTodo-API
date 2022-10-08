@@ -2,7 +2,6 @@ package todo
 
 import (
 	"gofiber-todo/config/database"
-	"gofiber-todo/src/entity"
 	"gofiber-todo/src/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,10 +17,9 @@ func NewModule(app fiber.Router) *TodoModule {
 	m.app = app
 	m.ctrl = &TodoController{}
 
-	//TODO: database.DB.Model(&entity.Todo{}) 이방법은 작동이 안됨!
-	m.ctrl.service = &TodoService{database.DB.Model(&entity.Todo{})}
-
+	m.ctrl.service = &TodoService{database.DB}
 	m.setRoutes()
+
 	return &m
 }
 
