@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"gofiber-todo/utils/jwt"
+	"gofiber-todo/src/utils/jwt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"

@@ -1,0 +1,241 @@
+definitions:
+  dto.CreateTodoDTO:
+    properties:
+      completed:
+        type: boolean
+      memo:
+        type: string
+      title:
+        maxLength: 10
+        type: string
+    required:
+    - title
+    type: object
+  dto.ListTodoDTO:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/dto.TodoDTO'
+        type: array
+    type: object
+  dto.LoginDTO:
+    properties:
+      email:
+        example: s1@s.com
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 100
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dto.LoginResult:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  dto.SignupDTO:
+    properties:
+      created_at:
+        type: string
+      email:
+        maxLength: 100
+        type: string
+      id:
+        type: integer
+      password:
+        maxLength: 100
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dto.TodoDTO:
+    properties:
+      completed:
+        type: boolean
+      created_at:
+        type: string
+      ended_at:
+        type: string
+      id:
+        type: integer
+      memo:
+        type: string
+      title:
+        type: string
+    type: object
+  response.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: login with email and pw
+      parameters:
+      - description: Email and Password
+        in: body
+        name: LoginDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LoginResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Login
+      tags:
+      - auth
+  /api/auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: signup with email and pw
+      parameters:
+      - description: Email and Password
+        in: body
+        name: SignupDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SignupDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LoginResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: SignUp
+      tags:
+      - auth
+  /api/todos:
+    get:
+      consumes:
+      - application/json
+      description: GetTodos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ListTodoDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetTodos
+      tags:
+      - todos
+    post:
+      consumes:
+      - application/json
+      description: CreateTodo
+      parameters:
+      - description: todo item
+        in: body
+        name: CreateTodoDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateTodoDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateTodo
+      tags:
+      - todos
+  /api/todos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: DeleteTodo
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteTodo
+      tags:
+      - todos
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

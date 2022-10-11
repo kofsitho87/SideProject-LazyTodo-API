@@ -34,7 +34,7 @@ func ConnectDb() {
 	}
 
 	log.Println("connected")
-	db.Logger = logger.Default.LogMode(logger.Info)
+	db.Logger = logger.Default.LogMode(logger.Error)
 
 	DB = db
 }

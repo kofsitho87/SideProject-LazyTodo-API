@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"gofiber-todo/src/config"
 	"gofiber-todo/src/config/database"
 	"gofiber-todo/src/entity"
 	auth_module "gofiber-todo/src/modules/auth"
@@ -11,13 +12,24 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/swagger"
+
+	_ "gofiber-todo/docs"
 )
 
-var (
-	port = flag.String("port", ":3000", "Port to listen on")
-	prod = flag.Bool("prod", false, "Enable prefork in Production")
-)
-
+// @title Fiber Example API
+// @version 1.0
+// @description This is a sample swagger for Fiber
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email fiber@swagger.io
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @securitydefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+// @host localhost:3000
+// @BasePath /
 func main() {
 	// Parse command-line flags
 	flag.Parse()
@@ -28,7 +40,7 @@ func main() {
 
 	// Create fiber app
 	app := fiber.New(fiber.Config{
-		Prefork: *prod, // go run app.go -prod
+		Prefork: false, // go run app.go -prod
 	})
 
 	// Middleware
@@ -37,6 +49,8 @@ func main() {
 		// Format: "${pid} ${status} - ${method} ${path}\n",
 	}))
 
+	app.Get("/swagger/*", swagger.HandlerDefault) // default
+
 	// Create a /api endpoint
 	apiRoute := app.Group("/api")
 
@@ -44,5 +58,5 @@ func main() {
 	auth_module.NewModule(apiRoute)
 
 	// Listen on port 3000
-	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000
+	log.Fatal(app.Listen(":" + config.PORT)) // go run app.go -port=:3000
 }

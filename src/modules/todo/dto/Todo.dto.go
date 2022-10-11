@@ -1,7 +1,6 @@
 package dto
 
 import (
-	"gofiber-todo/src/entity"
 	"time"
 )
 
@@ -14,13 +13,13 @@ type TodoDTO struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-func (dto TodoDTO) ToEntity() *entity.Todo {
-	return &entity.Todo{
-		ID:        dto.ID,
-		Title:     dto.Title,
-		Completed: dto.Completed,
-		Memo:      dto.Memo,
-		EndedAt:   dto.EndedAt,
-		CreatedAt: dto.CreatedAt,
-	}
-}
+// func (dto TodoDTO) ToEntity() *entity.Todo {
+// 	return &entity.Todo{
+// 		ID:        dto.ID,
+// 		Title:     dto.Title,
+// 		Completed: dto.Completed,
+// 		Memo:      dto.Memo,
+// 		EndedAt:   dto.EndedAt,
+// 		CreatedAt: dto.CreatedAt,
+// 	}
+// }

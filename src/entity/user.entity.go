@@ -10,7 +10,7 @@ type User struct {
 	gorm.Model
 
 	ID        uint   `gorm:"primaryKey;autoIncrement;not null"`
-	Email     string `gorm:"size:256;unique;not null"`
+	Email     string `gorm:"size:256;not null"`
 	Password  string `gorm:"not null;"`
 	CreatedAt time.Time
 }

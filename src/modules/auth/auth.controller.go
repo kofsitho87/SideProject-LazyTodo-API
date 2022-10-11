@@ -3,9 +3,9 @@ package auth
 import (
 	"gofiber-todo/src/entity"
 	"gofiber-todo/src/modules/auth/dto"
-	"gofiber-todo/utils/bcrypt"
-	"gofiber-todo/utils/jwt"
-	"gofiber-todo/utils/validator"
+	"gofiber-todo/src/utils/bcrypt"
+	"gofiber-todo/src/utils/jwt"
+	"gofiber-todo/src/utils/validator"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -21,6 +21,17 @@ func (ctrl *AuthController) getAccessToken(user *entity.User) string {
 	})
 }
 
+// Login godoc
+// @Summary      Login
+// @Description  login with email and pw
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        LoginDTO   body    dto.LoginDTO  true  "Email and Password"
+// @Success      200  	 {object}  	dto.LoginResult
+// @Failure      400  	 {object}		response.ErrorResponse
+// @Failure      500  	 {object}		response.ErrorResponse
+// @Router       /api/auth/login [post]
 func (ctrl *AuthController) Login(c *fiber.Ctx) error {
 	loginDto := new(dto.LoginDTO)
 	if err := validator.ParseBodyAndValidate(c, loginDto); err != nil {
@@ -57,6 +68,17 @@ func (ctrl *AuthController) Login(c *fiber.Ctx) error {
 	})
 }
 
+// SignUp godoc
+// @Summary      SignUp
+// @Description  signup with email and pw
+// @Tags         auth
+// @Accept       json
+// @Produce      json
+// @Param        SignupDTO   body   dto.SignupDTO  true  "Email and Password"
+// @Success      200  	 {object}  	dto.LoginResult
+// @Failure      400  	 {object}		response.ErrorResponse
+// @Failure      500  	 {object}		response.ErrorResponse
+// @Router       /api/auth/signup [post]
 func (ctrl *AuthController) SignUp(c *fiber.Ctx) error {
 	signUpDto := new(dto.SignupDTO)
 	if err := validator.ParseBodyAndValidate(c, signUpDto); err != nil {
