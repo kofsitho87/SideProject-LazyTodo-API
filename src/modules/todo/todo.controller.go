@@ -138,3 +138,51 @@ func (ctrl *TodoController) DeleteTodo(c *fiber.Ctx) error {
 		"data": true,
 	})
 }
+
+// CompleteTodo godoc
+// @Summary      CompleteTodo
+// @Description  CompleteTodo
+// @Tags         todos
+// @Accept       json
+// @Produce      json
+// @Security 		 ApiKeyAuth
+// @Param        id   	 path								int true "Todo ID"
+// @Success      200  	 {object}  					dto.TodoDTO
+// @Failure      400  	 {object}						response.ErrorResponse
+// @Failure      500  	 {object}						response.ErrorResponse
+// @Router       /api/todos/{id}/completed  [put]
+func (ctrl *TodoController) CompleteTodo(c *fiber.Ctx) error {
+	todoId, err := c.ParamsInt("id")
+
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	todoItem := &entity.Todo{}
+	todoItem.ID = uint(todoId)
+	res := ctrl.service.completeTodo(todoItem)
+
+	if err := res.Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	if res.RowsAffected == 0 {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Unable to delete todo",
+		})
+	}
+
+	if err := ctrl.service.getTodoByModel(todoItem).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data": todoItem.ToDto(),
+	})
+}

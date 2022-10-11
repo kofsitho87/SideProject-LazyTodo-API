@@ -83,7 +83,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Fiber Example API
+  title: Todo API
   version: "1.0"
 paths:
   /api/auth/login:
@@ -231,6 +231,37 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: DeleteTodo
+      tags:
+      - todos
+  /api/todos/{id}/completed:
+    put:
+      consumes:
+      - application/json
+      description: CompleteTodo
+      parameters:
+      - description: Todo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoDTO'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: CompleteTodo
       tags:
       - todos
 securityDefinitions:

@@ -30,4 +30,5 @@ func (m *TodoModule) setRoutes() {
 	route.Get("/:id", m.ctrl.GetTodo)
 	route.Post("/", m.ctrl.CreateTodo)
 	route.Delete("/:id", m.ctrl.DeleteTodo)
+	route.Put("/:id/complete", m.ctrl.CompleteTodo)
 }

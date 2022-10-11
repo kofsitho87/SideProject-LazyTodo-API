@@ -10,8 +10,6 @@ import (
 func Auth(c *fiber.Ctx) error {
 	token := c.Get("Authorization")
 
-	log.Println(token)
-
 	if token == "" {
 		return fiber.ErrUnauthorized
 	}
