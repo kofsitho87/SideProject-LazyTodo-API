@@ -111,3 +111,22 @@ func (ctrl *AuthController) SignUp(c *fiber.Ctx) error {
 		},
 	})
 }
+
+func (ctrl *AuthController) Me(c *fiber.Ctx) error {
+	userId := c.Locals("USER").(uint)
+
+	userEntity := &entity.User{}
+	if err := ctrl.service.findUserById(userEntity, userId).Error; err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": err.Error(),
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"data": &dto.MeResult{
+			ID:        userEntity.ID,
+			Email:     userEntity.Email,
+			CreatedAt: userEntity.CreatedAt,
+		},
+	})
+}

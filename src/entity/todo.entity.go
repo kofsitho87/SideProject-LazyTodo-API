@@ -12,7 +12,7 @@ type Todo struct {
 
 	ID        uint   `gorm:"primaryKey;autoIncrement;not null"`
 	Creator   uint   `gorm:"not null"`
-	Title     string `gorm:"not nulll;size:10"`
+	Title     string `gorm:"not nulll;size:20"`
 	Completed bool   `gorm:"not null;default:false"`
 	Memo      string
 	EndedAt   time.Time `gorm:"not null"`
@@ -23,8 +23,8 @@ func (todo *Todo) FromDto(dto *dto.CreateTodoDTO) *Todo {
 	todo.Title = dto.Title
 	todo.Completed = dto.Completed
 	todo.Memo = dto.Memo
-	todo.EndedAt = dto.EndedAt
-	// todo.EndedAt = time.Now()
+	// todo.EndedAt = dto.EndedAt
+	todo.EndedAt = time.Now()
 	return todo
 }
 

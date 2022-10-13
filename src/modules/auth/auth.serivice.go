@@ -19,6 +19,10 @@ func (s *AuthService) findUserByEmail(dest interface{}, email string) *gorm.DB {
 	return s.findUser(dest, "email = ?", email)
 }
 
+func (s *AuthService) findUserById(dest interface{}, id uint) *gorm.DB {
+	return s.findUser(dest, "id = ?", id)
+}
+
 func (s *AuthService) createUser(user *entity.User) *gorm.DB {
 	return s.repository.Create(user)
 }

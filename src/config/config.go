@@ -20,7 +20,7 @@ var (
 	// TOKENEXP returns the jwt token expiration duration.
 	// Should be time.ParseDuration string. Source: https://golang.org/pkg/time/#ParseDuration
 	// default: 10h
-	TOKENEXP = getEnv("TOKEN_EXP", "10h")
+	TOKENEXP = getEnv("TOKEN_EXP", "100h")
 )
 
 func getEnv(name string, fallback string) string {

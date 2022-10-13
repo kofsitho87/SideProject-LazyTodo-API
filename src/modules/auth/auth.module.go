@@ -3,6 +3,7 @@ package auth
 import (
 	"gofiber-todo/src/config/database"
 	"gofiber-todo/src/entity"
+	"gofiber-todo/src/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -26,4 +27,5 @@ func (m *AuthModule) setRoutes(app fiber.Router) {
 
 	route.Post("/login", m.ctrl.Login)
 	route.Post("/signup", m.ctrl.SignUp)
+	route.Use(middleware.Auth).Get("/me", m.ctrl.Me)
 }
